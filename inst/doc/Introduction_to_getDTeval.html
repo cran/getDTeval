@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2020-11-11" />
+<meta name="date" content="2021-06-20" />
 
 <title>Introduction to GetDTeval</title>
 
@@ -178,7 +178,7 @@ summary {
 
 
 <h1 class="title toc-ignore">Introduction to GetDTeval</h1>
-<h4 class="date">2020-11-11</h4>
+<h4 class="date">2021-06-20</h4>
 
 </div>
 
@@ -224,9 +224,9 @@ results &lt;-
 results[, Effect_Median := Programmatic_Median/Classic_Median]
 round(x = results, digits = 4)
 #&gt;    Classic_Mean Classic_Median Programmatic_Mean Programmatic_Median
-#&gt; 1:       0.0245         0.0228            0.0747              0.0714
+#&gt; 1:       0.0257         0.0241            0.0629              0.0605
 #&gt;    Effect_Median
-#&gt; 1:        3.1311</code></pre>
+#&gt; 1:        2.5119</code></pre>
 <p>For larger sample sizes and more complex calculations, the effect of programmatic designs can significantly increase the running time complexity.</p>
 <p>The <strong>getDTeval</strong> package was designed to overcome the trade-offs between programmatic designs and running time efficiency. The package creates a means of translating calls to get() and eval() into more optimized coding statements. In doing so, the package not only resolves many observed trade-offs between speed and efficiency; it also creates opportunities to expand the areas in which programmatic designs may be used in common coding applications.</p>
 </div>
@@ -416,9 +416,9 @@ benchmark.getDTeval(the.statement = the.statement.4,
                     times = 50,
                     seed = 282)
 #&gt;                      category     Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
-#&gt; 1:        getDTeval statement 0.009714 0.01114 0.01137 0.01233 0.01222 0.03188
-#&gt; 2: optimized coding statement 0.009148 0.01070 0.01105 0.01266 0.01195 0.05292
-#&gt; 3:  original coding statement 0.056749 0.05780 0.05873 0.06339 0.06508 0.11132</code></pre>
+#&gt; 1:        getDTeval statement 0.008915 0.01036 0.01041 0.01105 0.01052 0.02977
+#&gt; 2: optimized coding statement 0.008581 0.01010 0.01036 0.01169 0.01096 0.05176
+#&gt; 3:  original coding statement 0.045183 0.04851 0.04922 0.05345 0.05330 0.10045</code></pre>
 <p>The original coding statement uses calls to get() to generate results with a programmatic design. In the median and average cases, the running time is substantially worse than using the more optimized statement. There is a real trade-off between the flexibility of the programmatic design and the running time performance of directly naming the variables. However, translating the programmatic design's coding statement using getDTeval() produces running times that are quite similar to what is produced while directly using the optimized statements. These results suggest that getDTeval() can effectively eliminate these tradeoffs.</p>
 </div>
 </div>
@@ -456,7 +456,7 @@ getDTeval(the.statement = the.statement, return.as = 'all')
 #&gt; 4:      West       50.66667
 #&gt; 
 #&gt; $code
-#&gt; [1] &quot;dat[, .('Mean Awareness' = mean(Awareness) * 100), keyby = Region]&quot;
+#&gt; [1] &quot;dat[, .('`Mean Awareness`' = mean(Awareness) * 100), keyby = Region]&quot;
 #&gt; 
 #&gt; $original.statement
 #&gt; [1] &quot;dat[, .(eval(mean.awareness.name) = mean(get(awareness.name)) * 100), keyby = get(region.name)]&quot;</code></pre>
@@ -484,7 +484,7 @@ getDTeval(the.statement = the.statement, return.as='all')
 #&gt; 4 West                 0.507
 #&gt; 
 #&gt; $code
-#&gt; [1] &quot;dat %&gt;% group_by(Region) %&gt;% summarize('Mean Awareness'=mean(Awareness,na.rm=T))&quot;
+#&gt; [1] &quot;dat %&gt;% group_by(Region) %&gt;% summarize('`Mean Awareness`'=mean(Awareness,na.rm=T))&quot;
 #&gt; 
 #&gt; $original.statement
 #&gt; [1] &quot;dat %&gt;% group_by(get(region.name)) %&gt;% summarize(eval(mean.awareness.name)=mean(get(awareness.name),na.rm=T))&quot;</code></pre>
@@ -541,7 +541,7 @@ getDTeval(the.statement = the.statement, return.as='all')
 #&gt; 4 West                     4.80
 #&gt; 
 #&gt; $code
-#&gt; [1] &quot;dat %&gt;% group_by(Region) %&gt;% summarize('Mean Satisfaction' = mean(Satisfaction, na.rm=T))&quot;
+#&gt; [1] &quot;dat %&gt;% group_by(Region) %&gt;% summarize('`Mean Satisfaction`' = mean(Satisfaction, na.rm=T))&quot;
 #&gt; 
 #&gt; $original.statement
 #&gt; [1] &quot;dat %&gt;% group_by(get(region.name)) %&gt;% summarize(eval(sprintf(\&quot;Mean %s\&quot;, satisfaction.name)) = mean(get(satisfaction.name), na.rm=T))&quot;</code></pre>

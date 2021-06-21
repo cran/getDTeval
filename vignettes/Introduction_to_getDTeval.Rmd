@@ -70,7 +70,7 @@ In the second approach, the **get()** and **eval()** functions are used to conve
 
 Programmatic designs with the get() and eval() functions facilitate calculations in functions and in dynamic applications.  Even for basic analyses, this design creates greater flexibility for possible changes.  If the name of the Age variable were later changed to another value (e.g. Age_Years), the program could be adapted with a simple modification to the age.name variable.  Any downstream use of the Age variable through calls of get() or eval() to age.name would automatically adapt to the change.
 
-However, programmatic designs can lead to reduced runtime efficiency.  In the case of simple calls to the get() function, the performance can greatly decrease.  The following example demonstrates the associated reductions in efficiency in the case of calculating a grouped average.
+However, programmatic designs can lead to reduced runtime efficiency.  In the case of simple calls to the get() function, the performance can greatly decrease.  The following example demonstrates the associated reductions in efficiency in the case of calculating a grouped average. 
 
 ```{r runtime_comparison}
 age.name <- "Age"
